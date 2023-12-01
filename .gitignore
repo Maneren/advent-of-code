@@ -1,0 +1,7 @@
+/.env
+input.txt
+output.txt
+sample.txt
+
+.mypy_cache
+__pycache__
