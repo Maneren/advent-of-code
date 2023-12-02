@@ -39,14 +39,23 @@ main() {
     local default_py=$'def solve(print, print_output):\n  lines = open(0).read().splitlines()'
 
     mkdir "$folder"
-    (
-        echo "" >"$sample_file"
-        echo "" >"$output_file"
-        echo "$default_py" >"$python_file1"
-        echo "$default_py" >"$python_file2"
+    echo "" >"$sample_file"
+    echo "" >"$output_file"
+    echo "$default_py" >"$python_file1"
+    echo "$default_py" >"$python_file2"
 
-        curl --cookie "session=$AOC_COOKIE" -sS "https://adventofcode.com/$year/day/$day_with_no_zero/input" >"$input_file"
-    )
+
+    if [[ -z $AOC_COOKIE ]]; then
+        echo "Trying to load AOC_COOKIE from .env"
+        source .env
+
+        if [[ -z $AOC_COOKIE ]]; then
+            echo "AOC_COOKIE not set"
+            exit 1
+        fi
+    fi
+
+    curl --cookie "session=$AOC_COOKIE" -sS "https://adventofcode.com/$year/day/$day_with_no_zero/input" >"$input_file"
 }
 
 main "$@"

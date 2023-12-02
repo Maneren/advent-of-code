@@ -6,7 +6,8 @@ This repo contains tooling and my solutions for the Advent of Code challenges.
 
 All arguments are optional and must be used in the same order they are listed here.
 All scripts are assumed to be run form the root of the repo and that the environment
-variable `AOC_COOKIE` contains a valid login cookie for AOC.
+variable `AOC_COOKIE` is either set, or can be sourced from `.env` file
+in the root of the repo.
 
 ### `new_day.sh`
 

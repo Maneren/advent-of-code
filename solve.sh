@@ -48,6 +48,16 @@ main() {
     echo "$output" | tee "$output_file"
 
     if [[ $1 = 'send' && $exit_code = 0 ]]; then
+        if [[ -z $AOC_COOKIE ]]; then
+            echo "Trying to load AOC_COOKIE from .env"
+            source .env
+
+            if [[ -z $AOC_COOKIE ]]; then
+                echo "AOC_COOKIE not set"
+                exit 1
+            fi
+        fi
+
         curl --cookie "session=$AOC_COOKIE" -sS "https://adventofcode.com/$year/day/$day_with_no_zero/answer" --data "level=$part&answer=$output" | grep '<article><p>'
     fi
 }
