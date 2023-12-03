@@ -1,0 +1,3 @@
+Benchmarks are run ad-hoc without closing everything else.
+PC is Manjaro Linux, AMD Ryzen 5 2600, 32 GB RAM
+

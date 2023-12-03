@@ -1,0 +1,24 @@
+# Use `just work day-01 part1` to work on the specific binary for a specific day's problems
+work year day part:
+    cargo watch -i "*.bench.txt" -i "perf.*" -x "check -p y{{year}}-{{day}}" -s "just test {{part}} -p y{{year}}-{{day}}" -s "just lint {{year}} {{day}}" -s "just bench {{year}} {{day}} {{part}}" -s "just flamegraph {{year}} {{day}} {{part}}"
+www-watch:
+   RUST_LOG=info cargo +nightly leptos watch --project www
+www-build:
+   cargo +nightly leptos build --project www --release
+lint year day:
+    cargo clippy -p y{{year}}-{{day}}
+test part +FLAGS='-p y2023-day-01':
+    cargo nextest run {{FLAGS}} {{part}}
+bench-all:
+    cargo bench -q > benchmarks.txt
+bench year day part:
+    cargo bench --bench y{{year}}-{{day}}-bench {{part}} >> {{year}}/{{day}}.bench.txt
+flamegraph year day part:
+    cargo build --profile flamegraph --package y{{year}}-{{day}} --bin {{part}}
+    perf record --call-graph=dwarf $CARGO_TARGET_DIR/flamegraph/{{part}}
+    perf script > perf.script
+dhat year day part:
+    cargo run --profile dhat --features dhat-heap --package y{{year}}-{{day}} --bin {{part}}
+create year day:
+    cargo generate --path ./daily-template --name y{{year}}-{{day}}
+    mv ./y{{year}}-{{day}} ./{{year}}/{{day}}
