@@ -2,5 +2,9 @@ Benchmarks are run ad-hoc without closing everything else.
 PC is Manjaro Linux, AMD Ryzen 5 2600, 32 GB RAM
 
 y2023_day_01_bench  fastest       │ slowest       │ median        │ mean          │ samples │ iters
-├─ part1            52.52 µs      │ 65.39 µs      │ 53.29 µs      │ 53.67 µs      │ 100     │ 100
-╰─ part2            91.8 µs       │ 132.6 µs      │ 92.26 µs      │ 96.58 µs      │ 100     │ 100
+├─ part1            48.33 µs      │ 72.21 µs      │ 49.29 µs      │ 49.91 µs      │ 100     │ 100
+╰─ part2            91.78 µs      │ 130.2 µs      │ 92.86 µs      │ 94.21 µs      │ 100     │ 100
+
+y2023_day_02_bench  fastest       │ slowest       │ median        │ mean          │ samples │ iters
+├─ part1            45.35 µs      │ 63.27 µs      │ 45.55 µs      │ 46.83 µs      │ 100     │ 100
+╰─ part2            53.39 µs      │ 62.02 µs      │ 53.85 µs      │ 54.04 µs      │ 100     │ 100
