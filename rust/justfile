@@ -1,10 +1,6 @@
 # Use `just work day-01 part1` to work on the specific binary for a specific day's problems
 work year day part:
     cargo watch -i "*.bench.txt" -i "perf.*" -x "check -p y{{year}}-{{day}}" -s "just test {{part}} -p y{{year}}-{{day}}" -s "just lint {{year}} {{day}}" -s "just bench {{year}} {{day}} {{part}}" -s "just flamegraph {{year}} {{day}} {{part}}"
-www-watch:
-   RUST_LOG=info cargo +nightly leptos watch --project www
-www-build:
-   cargo +nightly leptos build --project www --release
 lint year day:
     cargo clippy -p y{{year}}-{{day}}
 test part +FLAGS='-p y2023-day-01':
