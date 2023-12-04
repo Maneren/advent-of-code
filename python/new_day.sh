@@ -36,7 +36,7 @@ main() {
 
     echo "Creating day $day of year $year, part $part"
 
-    local default_py=$'def solve(print, print_output):\n  lines = open(0).read().splitlines()'
+    local default_py=$'def solve(print, print_output):\n    lines = open(0).read().splitlines()'
 
     mkdir "$folder"
     echo "" >"$sample_file"
