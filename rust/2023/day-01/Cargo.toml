@@ -3,17 +3,15 @@ name = "y2023-day-01"
 version = "0.1.0"
 edition = "2021"
 
-[dependencies]
-dhat = { workspace = true }
-itertools = { workspace = true }
-miette = { workspace = true }
-nom = { workspace = true }
-thiserror = { workspace = true }
-tracing-subscriber = { workspace = true }
-tracing = { workspace = true }
+[[bin]]
+name = "part1"
+path = "src/part1.rs"
+
+[[bin]]
+name = "part2"
+path = "src/part2.rs"
 
 [dev-dependencies]
-criterion = { workspace = true }
 divan = { workspace = true }
 rstest = { workspace = true }
 
@@ -21,11 +19,3 @@ rstest = { workspace = true }
 name = "y2023-day-01-bench"
 path = "benches/benchmarks.rs"
 harness = false
-
-[[bench]]
-name = "y2023-day-01-bench-criterion"
-path = "benches/benchmarks-criterion.rs"
-harness = false
-
-[features]
-dhat-heap = []

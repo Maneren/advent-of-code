@@ -1,22 +1,17 @@
 use y2023_day_01::*;
 
 fn main() {
-    // Run registered benchmarks.
     divan::main();
 }
 
+const INPUT: &'static str = include_str!("../input.txt");
+
 #[divan::bench]
 fn part1() {
-    part1::process(divan::black_box(include_str!(
-        "../input1.txt",
-    )))
-    .unwrap();
+    part1::solve(divan::black_box(INPUT)).unwrap();
 }
 
 #[divan::bench]
 fn part2() {
-    part2::process(divan::black_box(include_str!(
-        "../input2.txt",
-    )))
-    .unwrap();
+    part2::solve(divan::black_box(INPUT)).unwrap();
 }

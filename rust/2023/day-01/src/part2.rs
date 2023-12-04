@@ -1,7 +1,13 @@
-use crate::custom_error::AocError;
+#[allow(dead_code)]
+fn main() -> Result<(), String> {
+    let start = std::time::Instant::now();
+    let result = solve(include_str!("../input.txt")).map_err(|e| e.to_string())?;
+    let elapsed = start.elapsed();
+    println!("'{}' in {elapsed:?}", result.to_string());
+    Ok(())
+}
 
-#[tracing::instrument]
-pub fn process(input: &str) -> miette::Result<String, AocError> {
+pub fn solve(input: &str) -> Result<impl ToString, String> {
     let output = input
         .lines()
         .map(|line| {
@@ -40,7 +46,7 @@ pub fn process(input: &str) -> miette::Result<String, AocError> {
         })
         .sum::<u32>();
 
-    Ok(output.to_string())
+    Ok(output)
 }
 
 #[cfg(test)]
@@ -48,7 +54,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_process() -> miette::Result<()> {
+    fn test_process() -> Result<(), String> {
         let input = "two1nine
 eightwothree
 abcone2threexyz
@@ -56,8 +62,8 @@ xtwone3four
 4nineeightseven2
 zoneight234
 7pqrstsixteen";
-        assert_eq!("281", process(input)?);
+        let result = solve(input)?.to_string();
+        assert_eq!("281", result);
         Ok(())
     }
 }
-

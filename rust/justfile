@@ -17,8 +17,6 @@ flamegraph year day part:
     cargo build --profile flamegraph --package y{{year}}-{{day}} --bin {{part}}
     perf record --call-graph=dwarf $CARGO_TARGET_DIR/flamegraph/{{part}}
     perf script > perf.script
-dhat year day part:
-    cargo run --profile dhat --features dhat-heap --package y{{year}}-{{day}} --bin {{part}}
 create year day:
     cargo generate --path ./daily-template --name y{{year}}-{{day}}
     mv ./y{{year}}-{{day}} ./{{year}}/{{day}}

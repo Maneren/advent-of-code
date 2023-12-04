@@ -1,4 +1,5 @@
 target
 day-*.bench.txt
 flamegraphs
-input*.txt
+input.txt
+perf.*
