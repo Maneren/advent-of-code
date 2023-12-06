@@ -1,0 +1,25 @@
+[package]
+name = "y2023-day-06"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "part1"
+path = "src/part1.rs"
+
+[[bin]]
+name = "part2"
+path = "src/part2.rs"
+
+[dependencies]
+itertools = { workspace = true }
+nom = { workspace = true }
+
+[dev-dependencies]
+divan = { workspace = true }
+rstest = { workspace = true }
+
+[[bench]]
+name = "y2023-day-06-bench"
+path = "benches/benchmarks.rs"
+harness = false

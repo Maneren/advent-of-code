@@ -573,3 +573,13 @@ dependencies = [
  "nom",
  "rstest",
 ]
+
+[[package]]
+name = "y2023-day-06"
+version = "0.1.0"
+dependencies = [
+ "divan",
+ "itertools",
+ "nom",
+ "rstest",
+]
