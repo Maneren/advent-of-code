@@ -6,7 +6,7 @@ lint year day:
 test part +FLAGS='-p y2023-day-01':
     cargo nextest run {{FLAGS}} {{part}}
 bench-all:
-    cargo bench -q > benchmarks.txt
+    cargo bench -q >> benchmarks.txt
 bench year day part:
     cargo bench --bench y{{year}}-{{day}}-bench {{part}} >> {{year}}/{{day}}.bench.txt
 flamegraph year day part:
