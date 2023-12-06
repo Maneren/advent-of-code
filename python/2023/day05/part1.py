@@ -13,10 +13,9 @@ def solve(print, print_output):
 
     i = 1
     while i < len(lines):
-        i += 1
+        i += 1  # skip the header line
+
         mapping = []
-        header, _ = lines[i].split(" ")
-        source, dest = header.split("-to-")
 
         i += 1
         while i < len(lines) and (line := lines[i]):
