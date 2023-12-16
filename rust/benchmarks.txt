@@ -19,3 +19,7 @@ y2023_day_05_bench  fastest       │ slowest       │ median        │ mean  
 y2023_day_06_bench  fastest       │ slowest       │ median        │ mean          │ samples │ iters
 ├─ part1            289.7 ns      │ 4.799 µs      │ 299.7 ns      │ 346.8 ns      │ 100     │ 100
 ╰─ part2            714.7 ns      │ 1.024 µs      │ 719.7 ns      │ 726.2 ns      │ 100     │ 200
+
+y2023_day_08_bench  fastest       │ slowest       │ median        │ mean          │ samples │ iters
+├─ part1            436.4 µs      │ 679.3 µs      │ 517.4 µs      │ 519.4 µs      │ 100     │ 100
+╰─ part2            1.641 ms      │ 2.284 ms      │ 1.729 ms      │ 1.817 ms      │ 100     │ 100
