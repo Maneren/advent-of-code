@@ -36,14 +36,11 @@ main() {
 
     echo "Creating day $day of year $year, part $part"
 
-    local default_py=$'def solve(print, print_output):\n    lines = open(0).read().splitlines()'
-
     mkdir "$folder"
     echo "" >"$sample_file"
     echo "" >"$output_file"
-    echo "$default_py" >"$python_file1"
-    echo "$default_py" >"$python_file2"
-
+    cp "./default.py" "$python_file1"
+    cp "./default.py" "$python_file2"
 
     if [[ -z $AOC_COOKIE ]]; then
         echo "Trying to load AOC_COOKIE from .env"
