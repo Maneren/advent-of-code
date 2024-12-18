@@ -3,16 +3,12 @@ import runpy
 from datetime import datetime
 
 file = sys.argv[1]
-
-if len(sys.argv) > 2:
-    silent = sys.argv[2] == "q"
-else:
-    silent = False
+silent = sys.argv[2] == "q" if len(sys.argv) > 2 else False
 
 python_print = print
 
 
-def empty_print(*a, **kw):
+def empty_print(*_a, **_kw):
     pass
 
 
