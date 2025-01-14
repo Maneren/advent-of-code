@@ -1,0 +1,53 @@
+help:
+	@echo "  just setup followed by just day01 should be everything you need"
+	@echo ""
+	@echo "- just setup		Create an local Opam switch, install dependencies, developer tools and build the project"
+	@echo "- just dependencies	Install project dependencies and developer tools"
+	@echo "- just switch		Create an local Opam switch"
+	@echo "- just build		Build the project"
+	@echo "- just packages		Install packages defined in your .opam file"
+	@echo "- just day01		Run Day 1 in watch mode - number below 10 are prefixed with 0"
+	@echo "  ..."
+	@echo "- just day25		Run Day 25 in watch mode"
+	@echo "- just completed		Show completed days"
+	@echo "- just clean		Clean the project"
+	@echo "- just fmt		Format the project, see .ocamlformat for configuration"
+	@echo "- just utop		Run UTOP, the OCaml REPL"
+	@echo "- just reset		Remove the local Opam switch"
+
+setup: ## Create an local Opam switch, install dependencies, developer tools and build the project
+	just switch
+	just dependencies
+	just build
+
+dependencies: ## Install project dependencies and development tools
+	just package
+	opam install -y ocamlformat=0.26.2 ocaml-lsp-server utop
+
+switch: ## Create an local Opam switch
+	opam switch create . 5.2.0 --no-install
+
+build: ## Build the project
+	dune build
+
+package: ## Install packages defined in your .opam file
+	opam install . -y --deps-only --with-test
+
+completed: ## Show completed days
+	dune exec ./completed_days.exe
+
+clean: ## Clean the project
+	dune clean
+
+fmt: ## Format the project, see .ocamlformat for configuration
+	dune build --auto-promote @fmt
+
+utop: ## Run UTOP, the OCaml REPL
+	dune utop .
+
+reset: ## Remove local opam switch
+	rm -rf ./_opam
+
+day year day: ## Run a day given the input - just day01
+	dune test ./src/year_20{{year}}/day_{{day}} -w
+
