@@ -1,0 +1,9 @@
+.stack-work/
+*~
+sample.txt
+dist-newstyle
+.hie
+.env
+inputs
+aoc
+/tags

@@ -1,0 +1,66 @@
+cabal-version:      3.12
+name:               aoc
+version:            0.1.0.0
+synopsis:           Advent of Code solutions in Haskell
+license:            MIT
+author:             Maneren
+category:           Math
+build-type:         Simple
+extra-doc-files:    README.md
+
+executable aoc
+  main-is: Main.hs
+  other-modules:
+      Day
+      Util
+      Data.Pos
+      Data.Pos3
+      Data.Range
+      Year2024
+      Year2024.Day01
+  hs-source-dirs:
+      src
+  default-extensions:
+      LambdaCase
+      OverloadedRecordDot
+      DuplicateRecordFields
+      OverloadedStrings
+      StrictData
+      TypeFamilies
+  ghc-options: 
+      -Wall
+      -Wcompat
+      -Widentities
+      -Wincomplete-record-updates
+      -Wincomplete-uni-patterns
+      -Wmissing-export-lists
+      -Wmissing-home-modules
+      -Wpartial-fields
+      -Wredundant-constraints
+      -Wno-name-shadowing
+      -Wno-unused-matches
+      -threaded
+      -with-rtsopts=-N6
+  build-depends:
+      array
+    , base >=4.16 && <5
+    , containers
+    , deepseq
+    , directory
+    , dotenv
+    , either
+    , heaps
+    , http-client
+    , http-types
+    , http-conduit
+    , lens
+    , loop
+    , monad-loops
+    , mtl
+    , parallel
+    , text
+    , transformers
+    , vector
+    , extra
+
+  default-language: GHC2024
