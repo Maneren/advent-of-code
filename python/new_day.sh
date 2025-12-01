@@ -36,7 +36,7 @@ main() {
 
     echo "Creating day $day of year $year, part $part"
 
-    mkdir "$folder"
+    mkdir -p "$folder"
     echo "" >"$sample_file"
     echo "" >"$output_file"
     cp "./default.py" "$python_file1"
@@ -52,7 +52,10 @@ main() {
         fi
     fi
 
-    curl --cookie "session=$AOC_COOKIE" -sS "https://adventofcode.com/$year/day/$day_with_no_zero/input" >"$input_file"
+    local problem_url="https://adventofcode.com/$year/day/$day_with_no_zero"
+
+    curl --cookie "session=$AOC_COOKIE" -sS "$problem_url" | pup 'pre code text{}' >"$sample_file"
+    curl --cookie "session=$AOC_COOKIE" -sS "$problem_url/input" >"$input_file"
 }
 
 main "$@"
