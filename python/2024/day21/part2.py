@@ -19,9 +19,7 @@ KEYPADS = {
     2 + 4j: ">",
 }
 
-
 BUTTONS = {v: k for k, v in KEYPADS.items()}
-
 
 def should_reverse(button, next_button):
     return all(
@@ -32,10 +30,9 @@ def should_reverse(button, next_button):
         ]
     )
 
-
 @cache
-def find_path_length(code, remaining) -> int:
-    if remaining < 0:
+def find_button_count(code, remaining_depth) -> int:
+    if remaining_depth < 0:
         return len(code) + 1  # press the code and an A
 
     length = 0
@@ -47,14 +44,13 @@ def find_path_length(code, remaining) -> int:
         if should_reverse(button, next_button):
             next_code = next_code[::-1]
 
-        length += find_path_length(next_code, remaining - 1)
+        length += find_button_count(next_code, remaining_depth - 1)
 
     return length
-
 
 def solve(print: Callable, print_output: Callable) -> None:
     codes = open(0).read().splitlines()
 
     print_output(
-        sum(find_path_length(code[:-1], 25) * int(code[:-1]) for code in codes)
+        sum(find_button_count(code[:-1], 25) * int(code[:-1]) for code in codes)
     )

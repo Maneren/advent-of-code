@@ -3,14 +3,12 @@ from itertools import pairwise
 import itertools
 from typing import Callable
 
-
 def next_number(secret):
     secret = (secret ^ (secret * 64)) % 16777216
     secret = (secret ^ (secret // 32)) % 16777216
     secret = (secret ^ (secret * 2048)) % 16777216
 
     return secret
-
 
 def sliding_window(iterable, n=2):
     iterables = itertools.tee(iterable, n)
@@ -20,7 +18,6 @@ def sliding_window(iterable, n=2):
             next(iterable, None)
 
     return zip(*iterables)
-
 
 def solve(print: Callable, print_output: Callable) -> None:
     lines = map(int, open(0).read().splitlines())

@@ -4,16 +4,13 @@ STEPS = 75
 
 cache = {}
 
-
 def solve(print: Callable, print_output: Callable) -> None:
     stones_input = list(map(int, open(0).read().strip().split()))
 
     stones = {}
     for stone in stones_input:
-        if stone in stones:
-            stones[stone] += 1
-        else:
-            stones[stone] = 1
+        stones.setdefault(stone, 0)
+        stones[stone] += 1
 
     for _ in range(STEPS):
         new_stones = {}

@@ -12,30 +12,14 @@ DIRECTIONS = [
     (0, -1),
 ]
 
-
 def isnt_perpendicular(a, b):
     return a is None or b is None or (a[0] * b[0] + a[1] * b[1]) != 0
-
-
-# def left(x, y) -> tuple[int, int]:
-#     return y, x
-#
-#
-# def right(x, y) -> tuple[int, int]:
-#     return -y, x
-#
-#
-# def diagonal(x, y) -> tuple[int, int]:
-#     return right(*left(x, y))
-
 
 def move(x, y, direction):
     return x + direction[0], y + direction[1]
 
-
 def in_bounds(grid, x, y):
     return 0 <= x < len(grid[0]) and 0 <= y < len(grid)
-
 
 def count_corners(grid, x, y, shape) -> int:
     s = 0
@@ -53,7 +37,6 @@ def count_corners(grid, x, y, shape) -> int:
             s += 1
 
     return s
-
 
 def flood_fill(grid, x, y, queue, visited, shape):
     if (x, y) in visited:
@@ -74,7 +57,6 @@ def flood_fill(grid, x, y, queue, visited, shape):
             continue
 
         flood_fill(grid, nx, ny, queue, visited, shape)
-
 
 def solve(print: Callable, print_output: Callable) -> None:
     lines = list(map(list, open(0).read().splitlines()))
