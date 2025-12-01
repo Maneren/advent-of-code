@@ -8,25 +8,13 @@ def solve(print: Callable, print_output: Callable) -> None:
     counter = 0
 
     for line in inputs:
-        d, n = line[0], line[1:]
-        n = int(n)
+        d, n = line[0], int(line[1:])
 
+        sgn = -1 if d == "L" else 1
 
-        while d == "L" and total - n <= 0:
-            n -= 100
-            counter += 1
+        counter += (sgn * total % 100 + n) // 100
 
-        if d == "L" and total == 0:
-            counter -= 1
-
-        while d == "R" and total + n >= 100:
-            n -= 100
-            counter += 1
-
-        change = -n if d == "L" else n
-        total  = (total + change + 100) % 100
+        total = (total + sgn * n) % 100
 
     print(total, counter)
     print_output(counter)
-
-
