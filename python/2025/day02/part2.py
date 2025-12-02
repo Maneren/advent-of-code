@@ -3,23 +3,15 @@ from typing import Callable
 
 
 def solve(print: Callable, print_output: Callable) -> None:
-    lines = open(0).read().splitlines()
+    lines = open(0).read()
 
-    id_ranges = [
-        tuple(map(int, num.split("-"))) for line in lines for num in
-        line.split(",") if num
-    ]
+    invalid_id = re.compile(r"^(\d+)\1++$")
 
-    total = 0
+    total = sum(
+        x
+        for num in map(str.strip, lines.split(","))
+        for x in range(*map(int, num.split("-")))
+        if invalid_id.match(str(x))
+    )
 
-    regex = re.compile(r"^(\d+)\1+$")
-
-    for start, end in id_ranges:
-        for x in range(start, end + 1):
-            if regex.match(str(x)):
-                print(x)
-                total += x
-
-
-    print(total)
     print_output(total)

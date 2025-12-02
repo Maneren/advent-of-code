@@ -2,27 +2,18 @@ from typing import Callable
 
 
 def solve(print: Callable, print_output: Callable) -> None:
-    lines = open(0).read().splitlines()
+    lines = open(0).read()
 
-    id_ranges = [
-        tuple(map(int, num.split("-"))) for line in lines for num in
-        line.split(",") if num
-    ]
+    id_ranges = (map(int, num.split("-")) for num in map(str.strip, lines.split(",")))
 
     total = 0
 
     for start, end in id_ranges:
         for x in range(start, end + 1):
             string = str(x)
-
             half = len(string) // 2
 
             if string[:half] == string[half:]:
-                print(x)
                 total += x
 
-
-    print(total)
     print_output(total)
-
-    
