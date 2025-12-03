@@ -54,8 +54,12 @@ main() {
 
     local problem_url="https://adventofcode.com/$year/day/$day_with_no_zero"
 
-    curl --cookie "session=$AOC_COOKIE" -sS "$problem_url" | pup 'pre code text{}' >"$sample_file"
-    curl --cookie "session=$AOC_COOKIE" -sS "$problem_url/input" >"$input_file"
+    curl -sS --cookie "session=$AOC_COOKIE" \
+        "$problem_url" \
+        | pup 'pre code text{}' \
+        | sed -z '$ s/\n$//' >"$sample_file"
+    curl -sS --cookie "session=$AOC_COOKIE" \
+        "$problem_url/input" >"$input_file"
 }
 
 main "$@"

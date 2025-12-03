@@ -58,7 +58,17 @@ main() {
             fi
         fi
 
-        curl --cookie "session=$AOC_COOKIE" -sS "https://adventofcode.com/$year/day/$day_with_no_zero/answer" --data "level=$part&answer=$output" | grep '<article><p>'
+        curl -sS --cookie "session=$AOC_COOKIE" \
+            "https://adventofcode.com/$year/day/$day_with_no_zero/answer" \
+            --data "level=$part&answer=$output" \
+            | pup 'article > p text{}' \
+            | perl -CS -MHTML::Entities -ne 'print decode_entities($_)' \
+            | head -n -1 \
+            | head -c -1 \
+            | tr '\n' ' ' \
+            | sed 's/\([[:space:]]\)\+/\1/g' \
+            | sed 's/ \([[:punct:]]\)/\1/g'
+
     fi
 }
 
