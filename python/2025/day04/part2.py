@@ -1,50 +1,23 @@
 from typing import Callable
 
 
-NEIGHBORS = [
-    (-1, 0),
-    (1, 0),
-    (0, -1),
-    (0, 1),
-    (-1, -1),
-    (-1, 1),
-    (1, -1),
-    (1, 1),
-]
+NEIGHBORS = [(dx, dy) for dx in range(-1, 2) for dy in range(-1, 2)]
+
 
 def solve(print: Callable, print_output: Callable) -> None:
-    lines = open(0).read().splitlines()
-    grid = [[ch == "@" for ch in line] for line in lines]
+    grid = {
+        (x, y)
+        for y, line in enumerate(open(0))
+        for x, ch in enumerate(line)
+        if ch == "@"
+    }
+    original = grid.copy()
 
+    while to_remove := {
+        (x, y)
+        for (x, y) in grid
+        if sum((x + dx, y + dy) in grid for dx, dy in NEIGHBORS) < 5
+    }:
+        grid -= to_remove
 
-    total = 0
-
-    while True:
-        to_remove = []
-
-        for y in range(len(grid)):
-            for x in range(len(grid[0])):
-                if not grid[y][x]:
-                    continue
-
-                full = 0
-                for dx, dy in NEIGHBORS:
-                    nx, ny = x + dx, y + dy
-
-                    if 0 <= nx < len(grid[0]) and 0 <= ny < len(grid) and grid[ny][nx]:
-                        full += 1
-
-                if full < 4:
-                    to_remove.append((x, y))
-
-        if not to_remove:
-            break
-
-        total += len(to_remove)
-
-        for x, y in to_remove:
-            grid[y][x] = False
-
-    print_output(total)
-
-
+    print_output(len(original) - len(grid))

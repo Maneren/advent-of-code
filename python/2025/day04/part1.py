@@ -1,36 +1,17 @@
 from typing import Callable
 
 
-NEIGHBORS = [
-    (-1, 0),
-    (1, 0),
-    (0, -1),
-    (0, 1),
-    (-1, -1),
-    (-1, 1),
-    (1, -1),
-    (1, 1),
-]
+NEIGHBORS = [(dx, dy) for dx in range(-1, 2) for dy in range(-1, 2)]
+
 
 def solve(print: Callable, print_output: Callable) -> None:
-    lines = open(0).read().splitlines()
-    grid = [[ch == "@" for ch in line] for line in lines]
+    grid = {
+        (x, y): ch == "@" for y, line in enumerate(open(0)) for x, ch in enumerate(line)
+    }
 
-
-    total = 0
-
-    for y in range(len(grid)):
-        for x in range(len(grid[0])):
-
-
-            full = 0
-            for dx, dy in NEIGHBORS:
-                nx, ny = x + dx, y + dy
-
-                if 0 <= nx < len(grid[0]) and 0 <= ny < len(grid) and grid[ny][nx]:
-                    full += 1
-
-            if full < 4:
-                total += 1
+    total = sum(
+        roll and sum(grid.get((x + dx, y + dy), False) for dx, dy in NEIGHBORS) < 5
+        for (x, y), roll in grid.items()
+    )
 
     print_output(total)
