@@ -2,30 +2,14 @@ from typing import Callable
 
 
 def solve(print: Callable, print_output: Callable) -> None:
-    lines = open(0).read().splitlines()
+    ranges, _ = map(str.splitlines, open(0).read().split("\n\n"))
 
-    ranges = []
+    ranges = sorted(tuple(map(int, line.split("-"))) for line in ranges)
 
-    for line in lines:
-        if not line:
-            break
+    highest = 0
 
-        a, b = map(int, line.split("-"))
-        ranges.append((a, b))
-
-    ranges.sort()
-
-    merged = []
-
-    for a, b in ranges:
-        if not merged or merged[-1][1] < a:
-            merged.append((a, b))
-        else:
-            merged[-1] = (merged[-1][0], max(merged[-1][1], b))
-
-    count = 0
-
-    for a, b in merged:
-        count += b - a + 1
+    count = sum(
+        -max(highest, lo - 1) + (highest := max(highest, hi)) for lo, hi in ranges
+    )
 
     print_output(count)
