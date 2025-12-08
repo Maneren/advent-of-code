@@ -1,9 +1,10 @@
-from collections import deque
-from math import prod, sqrt
+from math import dist, prod, sqrt
 from typing import Callable
+
 
 def distance(a, b):
     return sqrt(sum((x1 - x2) ** 2 for x1, x2 in zip(a, b)))
+
 
 def solve(print: Callable, print_output: Callable) -> None:
     lines = open(0).read().splitlines()
@@ -11,37 +12,24 @@ def solve(print: Callable, print_output: Callable) -> None:
     boxes = [tuple(map(int, line.split(","))) for line in lines]
 
     distance_pairs = sorted(
-        (distance(a, b), a, b) for i, a in enumerate(boxes) for b in boxes[i + 1 :]
+        ((a, b) for i, a in enumerate(boxes) for b in boxes[i + 1 :]),
+        key=lambda x: dist(*x),
     )
 
-    graph = {box: set() for box in boxes}
+    comp_map = {box: {box} for box in boxes}
 
-    for _, a, b in distance_pairs[:1000]:
-        graph[a].add(b)
-        graph[b].add(a)
+    for a, b in distance_pairs[:1000]:
+        a_component = comp_map[a]
+        b_component = comp_map[b]
 
-    # find components
-    components = []
-    visited = set()
-    queue = deque()
-
-    for box in graph:
-        if box in visited:
+        if a_component == b_component:
             continue
 
-        components.append([])
-        queue.append(box)
+        if len(a_component) < len(b_component):
+            a_component, b_component = b_component, a_component
 
-        while queue:
-            node = queue.popleft()
-            if node in visited:
-                continue
+        a_component.update(b_component)
+        for box in b_component:
+            comp_map[box] = a_component
 
-            visited.add(node)
-            components[-1].append(node)
-
-            for neighbor in graph[node]:
-                if neighbor not in visited:
-                    queue.append(neighbor)
-
-    print_output(prod(sorted(map(len, components))[-3:]))
+    print_output(prod(sorted(map(len, set(map(tuple, comp_map.values()))))[-3:]))

@@ -1,6 +1,7 @@
 from math import dist
 from typing import Callable
 
+
 def solve(print: Callable, print_output: Callable) -> None:
     lines = open(0).read().splitlines()
 
@@ -11,30 +12,23 @@ def solve(print: Callable, print_output: Callable) -> None:
         key=lambda x: dist(*x),
     )
 
-    components = [{box} for box in boxes]
+    comp_map = {box: {box} for box in boxes}
 
     for a, b in distance_pairs:
-        a_component = b_component = None
+        a_component = comp_map[a]
+        b_component = comp_map[b]
 
-        for component in components:
-            a_in = a in component
-            b_in = b in component
+        if a_component == b_component:
+            continue
 
-            if a_in and b_in:
-                break
+        if len(a_component) < len(b_component):
+            a_component, b_component = b_component, a_component
 
-            if b_in:
-                b_component = component
+        a_component.update(b_component)
 
-            elif a_in:
-                a_component = component
-        else:
-            assert a_component is not None
-            assert b_component is not None
+        if len(a_component) == len(boxes):
+            print_output(a[0] * b[0])
+            break
 
-            a_component.update(b_component)
-            components.remove(b_component)
-
-            if len(components) == 1:
-                print_output(a[0] * b[0])
-                break
+        for box in b_component:
+            comp_map[box] = a_component
