@@ -8,14 +8,14 @@ def line_rectangle_intersection(
 ) -> bool:
     l1x, l1y = l1
     l2x, l2y = l2
-    r1x, r2x = sorted((r1[0], r2[0]))
-    r1y, r2y = sorted((r1[1], r2[1]))
+    r1x, r1y = r1
+    r2x, r2y = r2
 
-    return not (
-        max(l1x, l2x) <= r1x
-        or r2x <= min(l1x, l2x)
-        or max(l1y, l2y) <= r1y
-        or r2y <= min(l1y, l2y)
+    return (
+        max(l1x, l2x) > min(r1x, r2x)
+        and min(l1x, l2x) < max(r1x, r2x)
+        and max(l1y, l2y) > min(r1y, r2y)
+        and min(l1y, l2y) < max(r1y, r2y)
     )
 
 
@@ -23,22 +23,20 @@ def solve(print: Callable, print_output: Callable) -> None:
     lines = open(0).readlines()
 
     coords = [cast(tuple[int, int], tuple(map(int, line.split(",")))) for line in lines]
-    borders = list(pairwise(coords + [coords[0]]))
 
-    sorted_borders = sorted(borders, key=lambda x: dist(*x))
+    borders = pairwise(coords + [coords[0]])
+    # longer borders have higher chance of intersection, so we will check them first
+    sorted_borders = sorted(borders, key=lambda x: dist(*x), reverse=True)
 
-    rectangles = sorted(
-        (
-            ((abs(u - x) + 1) * (abs(v - y) + 1), (x, y), (u, v))
-            for i, (x, y) in enumerate(coords)
-            for u, v in coords[i + 1 :]
-        ),
-        reverse=True,
+    rectangles = (
+        ((abs(bx - ax) + 1) * (abs(by - ay) + 1), (ax, ay), (bx, by))
+        for i, (ax, ay) in enumerate(coords)
+        for bx, by in coords[i + 1 :]
     )
 
     area = next(
         area
-        for area, a, b in rectangles
+        for area, a, b in sorted(rectangles, reverse=True)
         if not any(
             line_rectangle_intersection(*border, a, b) for border in sorted_borders
         )
