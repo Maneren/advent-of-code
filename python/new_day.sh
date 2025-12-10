@@ -56,7 +56,7 @@ main() {
 
     curl -sS --cookie "session=$AOC_COOKIE" \
         "$problem_url" \
-        | pup 'pre code text{}' \
+        | pup '.day-desc pre:first-of-type code text{}' \
         | sed -z '$ s/\n$//' >"$sample_file"
     curl -sS --cookie "session=$AOC_COOKIE" \
         "$problem_url/input" >"$input_file"
