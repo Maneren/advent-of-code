@@ -1,17 +1,13 @@
-import functools
 from queue import PriorityQueue
 import re
 from typing import Callable
 
 
-def apply(current: tuple[bool, ...], button: int | tuple[int, ...]) -> tuple[bool, ...]:
+def apply(current: tuple[bool, ...], button: tuple[int, ...]) -> tuple[bool, ...]:
     current_list = list(current)
 
-    if isinstance(button, int):
-        current_list[button] = not current_list[button]
-    else:
-        for i in button:
-            current_list[i] = not current_list[i]
+    for i in button:
+        current_list[i] = not current_list[i]
 
     return tuple(current_list)
 
@@ -22,7 +18,10 @@ def solve(print: Callable, print_output: Callable) -> None:
     parsed = [
         (
             list(re.match(r"\[(.*)\]", line).expand(r"\1")),
-            list(map(eval, re.findall(r"(\(\d++(?:,\d++)*\))", line))),
+            [
+                tuple(map(int, button.split(",")))
+                for button in map(str.strip, re.findall(r"\((\d++(?:,\d++)*)\)", line))
+            ],
         )
         for line in lines
     ]
@@ -44,16 +43,13 @@ def solve(print: Callable, print_output: Callable) -> None:
                 total += steps
                 break
 
-            if current in visited:
-                continue
-
-            visited.add(current)
-
             for button in buttons:
                 new = apply(current, button)
 
                 if new in visited:
                     continue
+
+                visited.add(new)
 
                 queue.put((steps + 1, new))
 
