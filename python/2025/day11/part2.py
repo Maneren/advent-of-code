@@ -3,30 +3,20 @@ from typing import Callable
 
 
 def solve(print: Callable, print_output: Callable) -> None:
-    lines = open(0).readlines()
+    graph: dict[str, list[str]] = {}
 
-    graph = {}
-
-    for line in lines:
-        a, b = line.strip().split(":")
+    for line in open(0):
+        a, b = line.split(":")
         graph[a] = b.strip().split()
 
     @functools.cache
-    def count_paths(start, end, dac: bool, fft: bool):
-        if start == end:
+    def count_paths(start: str, end: str, dac=False, fft=False):
+        if start == "out":
             return int(dac and fft)
 
-        if start == "dac":
-            dac = True
+        return sum(
+            count_paths(node, end, dac or start == "dac", fft or start == "fft")
+            for node in graph[start]
+        )
 
-        if start == "fft":
-            fft = True
-
-        total = 0
-
-        for node in graph[start]:
-            total += count_paths(node, end, dac, fft)
-
-        return total
-
-    print_output(count_paths("svr", "out", False, False))
+    print_output(count_paths("svr", "out"))

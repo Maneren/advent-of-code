@@ -1,24 +1,19 @@
+import functools
 from typing import Callable
 
 
 def solve(print: Callable, print_output: Callable) -> None:
-    lines = open(0).readlines()
+    graph: dict[str, list[str]] = {}
 
-    graph = {}
-
-    for line in lines:
-        a, b = line.strip().split(":")
+    for line in open(0):
+        a, b = line.split(":")
         graph[a] = b.strip().split()
 
-    def count_paths(start, end):
-        if start == end:
-            return 1
-
-        total = 0
-
-        for node in graph[start]:
-            total += count_paths(node, end)
-
-        return total
+    @functools.cache
+    def count_paths(start: str, end: str):
+        return (
+            sum(count_paths(node, end) for node in graph[start]) if start != end else 1
+        )
 
     print_output(count_paths("you", "out"))
+
